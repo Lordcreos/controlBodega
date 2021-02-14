@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="index.xhtml">
+		<ui:define name="content">
+
+			<h1>Servicio</h1>
+			<p:panel id="basic" header="Ingrese Fecha y Estado">
+				<h:form id="frmServicio">
+					<p:growl id="growl" showDetail="true" sticky="true" />
+					<h:panelGrid columns="1">
+
+						<p:outputLabel value=" Seleccione Tipo"></p:outputLabel>
+						<p:selectOneMenu id="console" value="#{servicioView.nuevoTipo.idTipo}"
+							style="width:125px">
+							<f:selectItem itemLabel="Seleccione Tipo" itemValue="" />
+							<f:selectItems value="#{servicioView.listarTipo}" var="tipo"
+								itemLabel="#{tipo.nombreTipo}" itemValue="#{tipo.idTipo}">
+							</f:selectItems>
+						</p:selectOneMenu>
+
+						<p:outputLabel value=" Seleccione Cliente"></p:outputLabel>
+						<p:selectOneMenu ida="console" value="#{servicioView.nuevoCliente.idCliente}"
+							style="width:125px">
+							<f:selectItem itemLabel="Seleccione Cliente" itemValue="" />
+							<f:selectItems value="#{servicioView.listarCliente}"
+								var="cliente" itemLabel="#{cliente.nombreCliente}"
+								itemValue="#{cliente.idCliente}">
+							</f:selectItems>
+						</p:selectOneMenu>
+
+						<p:outputLabel value=" Seleccione Empleado"></p:outputLabel>
+						<p:selectOneMenu idb="console" value="#{servicioView.nuevoEmpleado.idEmpleado}"
+							style="width:125px">
+							<f:selectItem itemLabel="Seleccione Empleado" itemValue="" />
+							<f:selectItems value="#{servicioView.listarEmpleado}"
+								var="empleado" itemLabel="#{empleado.nombreEmpleado}"
+								itemValue="#{empleado.idEmpleado}">
+							</f:selectItems>
+						</p:selectOneMenu>
+
+
+						<p:outputLabel value="Fecha"></p:outputLabel>
+						<p:datePicker value="#{servicioView.fechaServicio}" showTime="false" placeholder="dd/mm/yyyy"/>
+							
+						
+					</h:panelGrid>
+					<p:commandButton value="Agregar"
+						action="#{servicioView.insertarServicio}" update="@form detalle"></p:commandButton>
+				</h:form>
+			</p:panel>
+			<p:panel id="detalle" header="Lista">
+				<h:form>
+					<p:dataTable var="ltsServicio"
+						value="#{servicioView.listarServicio}" widgetVar="dtmarca"
+						rows="5" paginator="true" paginatorPosition="bottom"
+						scrollable="true" scrollRows="20" scrollHeight="520">
+						
+						<p:column headerText="Estado"
+							filterBy="#{ltsServicio.estadoServicio}"
+							filterMatchMode="contains">
+							<h:outputText value="#{(ltsServicio.estadoServicio == 1) ? 'Activo' : 'Inactivo' }" />
+						</p:column>
+						<p:column headerText="Fecha" filterBy="#{ltsServicio.fechaServicio}"
+							filterMatchMode="contains">
+							<h:outputText value="#{ltsServicio.fechaServicio}" />
+						</p:column>
+						<p:column headerText="Tipo"
+						filterBy="#{ltsServicio.fkTipo.nombreTipo}"
+							filterMatchMode="contains" >
+						<h:outputText value="#{ ltsServicio.fkTipo.nombreTipo}" />
+					</p:column>
+					<p:column headerText="Cliente"  
+					filterBy="#{ltsServicio.fkCliente.nombreCliente}"
+							filterMatchMode="contains">
+						<h:outputText value="#{ ltsServicio.fkCliente.nombreCliente}, #{ltsServicio.fkCliente.apellidoCliente}]" />
+					</p:column>
+						<p:column headerText="Empleado"
+						filterBy="#{ltsServicio.fkEmpleado.nombreEmpleado}"
+							filterMatchMode="contains">
+						<h:outputText value="#{ ltsServicio.fkEmpleado.nombreEmpleado}" />
+					</p:column>
+					</p:dataTable>
+
+
+				</h:form>
+			</p:panel>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

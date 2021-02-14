@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="index.xhtml">
+		<ui:define name="content">
+
+			<h1>Equipos</h1>
+			<p:panel id="basic" header="Ingrese Un Equipo">
+				<h:form id="frmEquipo">
+					<p:growl id="growl" showDetail="true" sticky="true" />
+					<h:panelGrid columns="2">
+
+
+						<p:outputLabel value=" Seleccione Bodega"></p:outputLabel>
+						<p:selectOneMenu id="console" value="#{equipoView.idBodega}"
+							style="width:125px">
+							<f:selectItem itemLabel="Seleccione Bodega" itemValue="" />
+							<f:selectItems value="#{equipoView.listarBodega}" var="bodega"
+								itemLabel="#{bodega.nombreBodega}"
+								itemValue="#{bodega.idBodega}">
+							</f:selectItems>
+						</p:selectOneMenu>
+						<p:outputLabel value="Nombre de Equipo"></p:outputLabel>
+						<p:inputText id="nombreEquipo" value="#{equipoView.nombreEquipo}" />
+
+
+						<p:outputLabel value="Caracteristicas"></p:outputLabel>
+						<p:inputText id="caracteristicaEquipo"
+							value="#{equipoView.caracteristicaEquipo}" />
+
+					</h:panelGrid>
+
+
+					<p:commandButton icon="fa fa-floppy-o" value="Agregar" id="idBtnAg"
+						action="#{equipoView.insertarEquipo}" update="@form detalle"></p:commandButton>
+
+
+				</h:form>
+			</p:panel>
+			<p:panel id="detalle" header="Lista">
+				<h:form>
+					<p:dataTable var="ltsEquipo" value="#{equipoView.listarEquipo}"
+						widgetVar="dtmarca" rows="5" paginator="true"
+						paginatorPosition="bottom" scrollable="true" scrollRows="20"
+						scrollHeight="520">
+						
+						<p:column headerText="Nombre Equipo"
+							filterBy="#{ltsEquipo.nombreEquipo}" filterMatchMode="contains">
+							<h:outputText value="#{ltsEquipo.nombreEquipo}" />
+						</p:column>
+						<p:column headerText="Caracteristicas Equipo"
+							filterBy="#{ltsEquipo.caracteristicaEquipo}"
+							filterMatchMode="contains">
+							<h:outputText value="#{ltsEquipo.caracteristicaEquipo}" />
+						</p:column>
+
+						<p:column headerText="Bodega"
+						filterBy="#{ltsEquipo.fkBodega.nombreBodega}"
+							filterMatchMode="contains">
+							<h:outputText value="#{ltsEquipo.fkBodega.nombreBodega}" />
+						</p:column>
+
+
+					</p:dataTable>
+				</h:form>
+			</p:panel>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

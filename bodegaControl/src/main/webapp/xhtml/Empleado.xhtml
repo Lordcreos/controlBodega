@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="index.xhtml">
+		<ui:define name="content">
+
+			<h1>Empleados</h1>
+			<p:panel id="basic" header="Ingrese un Empleado">
+				<h:form id="frmEmpleado">
+					<p:growl id="growl" showDetail="true" sticky="true" />
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Nombre"></p:outputLabel>
+						<p:inputText id="nombreEmpleado"
+							value="#{empleadoView.nombreEmpleado}" />
+						<p:outputLabel value="Area"></p:outputLabel>
+						<p:inputText id="areaEmpleado"
+							value="#{empleadoView.areaEmpleado}" />
+						<p:outputLabel value="Telefono"></p:outputLabel>
+						<p:inputText id="telefonoEmpleado"
+							value="#{empleadoView.telefonoEmpleado}" />
+						<p:outputLabel value="Correo"></p:outputLabel>
+						<p:inputText id="correoEmpleado"
+							value="#{empleadoView.correoEmpleado}" />
+						
+					</h:panelGrid>
+					<p:commandButton icon="fa fa-floppy-o" value="Agregar" id="idBtnAg"
+						action="#{empleadoView.insertarEmpleado}" update="@form detalle"></p:commandButton>
+				</h:form>
+
+			</p:panel>
+			<p:panel id="detalle" header="Lista">
+				<h:form>
+					<p:dataTable var="ltsEmpleado"
+						value="#{empleadoView.listarEmpleado}" widgetVar="dtmarca"
+						rows="5" paginator="true" paginatorPosition="bottom"
+						scrollable="true" scrollRows="20" scrollHeight="520">
+					
+						<p:column headerText="Nombre"
+							filterBy="#{ltsEmpleado.nombreEmpleado}"
+							filterMatchMode="contains">
+							<h:outputText value="#{ltsEmpleado.nombreEmpleado}" />
+						</p:column>
+						<p:column headerText="Area"  filterBy="#{ltsEmpleado.areaEmpleado}"
+							filterMatchMode="contains">
+							<h:outputText value="#{ltsEmpleado.areaEmpleado}" />
+						</p:column>
+						<p:column headerText="Telefono" filterBy="#{ltsEmpleado.telefonoEmpleado}"
+							filterMatchMode="contains">
+							<h:outputText value="#{ltsEmpleado.telefonoEmpleado}" />
+						</p:column>
+						<p:column headerText="Correo" filterBy="#{ltsEmpleado.correoEmpleado}"
+							filterMatchMode="contains">
+							<h:outputText value="#{ltsEmpleado.correoEmpleado}" />
+						</p:column>
+						<p:column headerText="Estado">
+							<h:outputText value="#{(ltsEmpleado.estadoEmpleado== 1) ? 'Activo' : 'Inactivo'}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</p:panel>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

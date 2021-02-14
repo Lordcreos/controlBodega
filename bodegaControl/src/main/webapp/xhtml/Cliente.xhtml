@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+
+<ui:composition template="index.xhtml">
+<ui:define name="content">
+
+	<h1>Clientes</h1>
+			<p:growl id="growl" showDetail="true" sticky="true" />
+		<h:form id="frmCliente">
+	<p:panel id="basic" header="Ingrese Datos Cliente">
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Cedula"></p:outputLabel>
+				<p:inputText id="cedulaCliente" value="#{clienteView.cedulaCliente}" />
+				<p:outputLabel value="Nombre"></p:outputLabel>
+				<p:inputText id="nombreCliente" value="#{clienteView.nombreCliente}" />
+				<p:outputLabel value="Apellido"></p:outputLabel>
+				<p:inputText id="apellidoCliente"
+					value="#{clienteView.apellidoCliente}" />
+				<p:outputLabel value="Correo"></p:outputLabel>
+				<p:inputText id="correoCliente" value="#{clienteView.correoCliente}" />
+				<p:outputLabel value="Direccion"></p:outputLabel>
+				<p:inputText id="direccionCliente"
+					value="#{clienteView.direccionCliente}" />
+				<p:outputLabel value="Telefono"></p:outputLabel>
+				<p:inputText id="telefonoCliente"
+					value="#{clienteView.telefonoCliente}" />
+				
+			</h:panelGrid>
+			<p:commandButton icon="fa fa-floppy-o" value="Agregar" id="idBtnAg"
+				action="#{clienteView.insertarCliente}" update="@form detalle"></p:commandButton>
+		
+
+
+	</p:panel>
+
+	<p:panel  header="Lista">
+		
+			<p:dataTable var="ltsCliente" value="#{clienteView.listarCliente}"
+				widgetVar="dtmarca" rows="5" paginator="true"
+				paginatorPosition="bottom" scrollable="true" scrollRows="20"
+				scrollHeight="520" id="detalle">
+				
+				<p:column headerText="#Identificacion"
+					filterBy="#{ltsCliente.cedulaCliente}" filterMatchMode="contains">
+					<h:outputText value="#{ltsCliente.cedulaCliente}" />
+				</p:column>
+				<p:column headerText="Nombre" filterBy="#{ltsCliente.nombreCliente}"
+					filterMatchMode="contains">
+					<h:outputText value="#{ltsCliente.nombreCliente}" />
+				</p:column>
+				<p:column headerText="Apellido"
+					filterBy="#{ltsCliente.apellidoCliente}" filterMatchMode="contains">
+					<h:outputText value="#{ltsCliente.apellidoCliente}" />
+				</p:column>
+				<p:column headerText="Correo"
+				filterBy="#{ltsCliente.correoCliente}" filterMatchMode="contains">
+					<h:outputText value="#{ltsCliente.correoCliente}" />
+				</p:column>
+				<p:column headerText="Direccion"
+				filterBy="#{ltsCliente.direccionCliente}" filterMatchMode="contains">
+					<h:outputText value="#{ltsCliente.direccionCliente}" />
+				</p:column>
+				<p:column headerText="Telefono"
+				filterBy="#{ltsCliente.telefonoCliente}" filterMatchMode="contains">
+					<h:outputText value="#{ltsCliente.telefonoCliente}" />
+				</p:column>
+				<p:column headerText="Estado">
+					<h:outputText value="#{(ltsCliente.estadoCliente == 1) ? 'Activo' : 'Inactivo'}" />
+				</p:column>
+				<p:column headerText="Opciones">
+					<p:commandButton icon="fa fa-floppy-o" value="Eliminar" action="#{clienteView.eliminarCliente(ltsCliente.idCliente)}" update="growl detalle"></p:commandButton>
+					<p:commandButton icon="fa fa-floppy-o" value="Editar" action="#{clienteView.cargarInformacion(ltsCliente.idCliente)}" update="@form"></p:commandButton>
+				</p:column>
+			</p:dataTable>
+	</p:panel>
+		</h:form>
+
+</ui:define>
+</ui:composition>
+
+</h:body>
+</html>

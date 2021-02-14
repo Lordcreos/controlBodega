@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+
+
+	<ui:composition template="index.xhtml">
+		<ui:define name="content">
+
+			<h1>Tipo Detalle</h1>
+			<p:panel id="basic" header="Ingrese Detalles">
+				<h:form id="frmDetalle">
+					<p:growl id="growl" showDetail="true" sticky="true" />
+					<h:panelGrid columns="1">
+
+						<p:outputLabel value=" Seleccione Equipo"></p:outputLabel>
+						<p:selectOneMenu ida="console" value="#{detalleView.nuevoEquipo.idEquipo}"
+							style="width:125px">
+							<f:selectItem itemLabel="Seleccione Equipo" itemValue="" />
+							<f:selectItems value="#{detalleView.listarEquipo}" var="equipo"
+								itemLabel="#{equipo.nombreEquipo}"
+								itemValue="#{equipo.idEquipo}">
+							</f:selectItems>
+						</p:selectOneMenu>
+						
+						<p:outputLabel value=" Seleccione Servicio"></p:outputLabel>
+						<p:selectOneMenu idb="console" value="#{detalleView.nuevoServicio.idServicio}"
+							style="width:125px">
+							<f:selectItem itemLabel="Seleccione Servicio" itemValue="" />
+							<f:selectItems value="#{detalleView.listarServicio}" var="servicio"
+								itemLabel="#{servicio.fechaServicio}"
+								itemValue="#{servicio.idServicio}">
+							</f:selectItems>
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+					<p:commandButton value="Agregar"
+						action="#{detalleView.insertarDetalle}" update="@form detalle"></p:commandButton>
+											
+				</h:form>
+
+			</p:panel>
+			<p:panel id="detalle" header="Lista">
+				<p:dataTable var="ltsDetalle" value="#{detalleView.listarDetalle}">
+				
+				
+					<p:column headerText="Fecha Servicio">
+						<h:outputText value="#{ltsDetalle.fkServicio.fechaServicio}" />
+					</p:column>
+					
+					<p:column headerText="Estado Servicio">
+						<h:outputText value="#{ ltsDetalle.fkEquipo.nombreEquipo}" />
+					</p:column>
+					
+					<p:column headerText="Caracteristicas Equipo">
+
+						<h:outputText value="#{ltsDetalle.fkEquipo.caracteristicaEquipo }" />
+					</p:column>
+					
+				</p:dataTable>
+			</p:panel>
+			
+			
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
